@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAGA Project Constitution</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0A0A08; color: #EAE3D3; font-family: 'Noto Serif JP', serif; font-size: 15px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+
+.hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 48px 24px 40px; border-bottom: 1px solid #2A2618; position: relative; overflow: hidden; }
+.hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 12vw, 72px); letter-spacing: 0.04em; line-height: 0.92; color: #C9A24A; margin-bottom: 24px; }
+.hero-version { font-family: 'Space Mono', monospace; font-size: 11px; color: #B8AF9C; letter-spacing: 0.12em; margin-bottom: 20px; display: block; }
+.hero-def { font-size: 13px; color: #B8AF9C; line-height: 1.9; max-width: 420px; margin-bottom: 40px; }
+.hero-divider { width: 40px; height: 1px; background: #C9A24A; margin-bottom: 32px; }
+.hero-nav { display: flex; flex-direction: column; gap: 12px; }
+.hero-nav a { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; text-decoration: none; letter-spacing: 0.12em; display: flex; align-items: center; gap: 10px; }
+.hero-nav a::before { content: ''; display: inline-block; width: 20px; height: 1px; background: #C9A24A; }
+.hero-bg-text { position: absolute; top: 40px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 25vw, 160px); color: #C9A24A; opacity: 0.04; line-height: 1; pointer-events: none; user-select: none; }
+
+.section { padding: 56px 24px 48px; border-bottom: 1px solid #1E1C14; }
+.section-label { font-family: 'Space Mono', monospace; font-size: 9px; color: #B8AF9C; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; color: #EAE3D3; margin-bottom: 32px; }
+
+.card { border: 1px solid #2A2618; margin-bottom: 16px; cursor: pointer; transition: border-color 0.2s; }
+.card:hover { border-color: #C9A24A; }
+.card.open { border-color: #C9A24A; }
+.card-head { padding: 18px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.card-id { font-family: 'Space Mono', monospace; font-size: 9px; color: #C9A24A; letter-spacing: 0.14em; margin-bottom: 6px; display: block; }
+.card-name { font-size: 14px; color: #EAE3D3; font-weight: 400; line-height: 1.5; }
+.card-toggle { flex-shrink: 0; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; color: #C9A24A; font-family: 'Space Mono', monospace; font-size: 14px; transition: transform 0.2s; margin-top: 2px; }
+.card.open .card-toggle { transform: rotate(45deg); }
+.card-body { display: none; padding: 0 20px 20px; border-top: 1px solid #2A2618; }
+.card.open .card-body { display: block; }
+.card-desc { font-size: 13px; color: #B8AF9C; line-height: 1.9; margin-top: 16px; margin-bottom: 16px; }
+.card-meta { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; margin-bottom: 16px; display: block; }
+.card-tag { display: inline-block; background: #1A1712; border: 1px solid #2A2618; color: #B8AF9C; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 3px 8px; margin-right: 6px; margin-bottom: 8px; }
+.card-divider { width: 24px; height: 1px; background: #2A2618; margin: 14px 0; }
+.card-how { font-size: 12px; color: #B8AF9C; line-height: 1.8; }
+
+.gloss-item { padding: 16px 0; border-bottom: 1px solid #1E1C14; }
+.gloss-term { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
+.gloss-def { font-size: 12px; color: #B8AF9C; line-height: 1.85; }
+
+.footer { padding: 40px 24px; text-align: center; }
+.footer-divider { font-family: 'Space Mono', monospace; font-size: 20px; color: #C9A24A; letter-spacing: 0.3em; margin-bottom: 20px; display: block; }
+.footer-text { font-family: 'Space Mono', monospace; font-size: 10px; color: #3A3020; letter-spacing: 0.12em; line-height: 2; }
+
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<section class="hero" id="top">
+  <div class="hero-bg-text">MAGA</div>
+  <span class="hero-eyebrow">MAGA Project · Living Document</span>
+  <h1 class="hero-title">MAGA<br>PROJECT<br>CONSTITUTION</h1>
+  <span class="hero-version" id="hero-version"></span>
+  <p class="hero-def">認知インフラの研究・設計・実装のための、<br>生きた憲法。削除は推奨されない。<br>追加が、進化のための既定の方法である。</p>
+  <div class="hero-divider"></div>
+  <nav class="hero-nav" id="hero-nav"></nav>
+</section>
+
+<div id="sections-root"></div>
+
+<section class="section" id="glossary">
+  <span class="section-label">Reference</span>
+  <h2 class="section-title">Key Terms</h2>
+  <div id="glossary-root"></div>
+</section>
+
+<section class="section" id="versions">
+  <span class="section-label">Version History</span>
+  <h2 class="section-title">更新履歴</h2>
+  <div id="version-root"></div>
+</section>
+
+<footer class="footer">
+  <span class="footer-divider">⸻</span>
+  <p class="footer-text" id="footer-text"></p>
+</footer>
+
+<script>
+// ============================================================
+// ★ここだけ編集する★ サイトのすべてのデータ
+// ============================================================
+var SITE_DATA = {
+
+  version: "Version 1.3 · 2026",
+
+  // ナビゲーション（sectionのid と ラベルを対応させる）
+  nav: [
+    { id: "foundation", label: "Foundation" },
+    { id: "core20",     label: "Core 20" },
+    { id: "living",     label: "Living Constitution" },
+    { id: "field",      label: "Field Projects" },
+    { id: "glossary",   label: "Glossary" }
+  ],
+
+  // セクションとカード
+  sections: [
+    {
+      id: "foundation",
+      label: "Phase 1",
+      title: "Foundation",
+      cards: [
+        {
+          id: "CONSTITUTION · v1.0",
+          name: "MAGA Project Constitution<br>Front Matter",
+          desc: "Preface / Why MAGA? / Preamble（研究憲章）/ How to Read / Methodology / Concept Map の7セクション。本プロジェクト全体を支える憲法的テキスト。「削除は推奨されない。追加が進化の既定の方法」という原則を宣言する。",
+          meta: "14 pages · docx",
+          tags: ["Front Matter", "Research Charter", "Methodology"],
+          file: "MAGA_Project_Constitution_v1.0_FrontMatter.docx"
+        }
+      ]
+    },
+    {
+      id: "core20",
+      label: "Phase 2",
+      title: "Core 20",
+      cards: [
+        {
+          id: "CORE20 · v1.1 · Merged",
+          name: "Core 20 統合版<br><small style='font-size:11px;color:#B8AF9C;'>全20枚 · 54ページ</small>",
+          desc: "Core Philosophy(5) / Research Core(6) / Product Core(3) / Business Core(3) / Urban Core(3)の20枚が1ファイルに統合。うちv0.2（勾玉図鑑反映済み）11枚、v0.1のまま9枚。",
+          meta: "54 pages · docx",
+          tags: ["PH-0001〜0005", "RS-0001〜0006", "PD-0001〜0003", "BS-0001〜0003", "UR-0001〜0003"],
+          file: "Core20_v1.1_Merged.docx"
+        },
+        {
+          id: "REFERENCE",
+          name: "Card Index（更新状況一覧）",
+          desc: "v0.2反映済み：PH-0003認知 / PH-0004 Knowledge / RS-0003 Sensemaking / RS-0004 分散認知 / RS-0006 Cognitive Infrastructure / PD-0001〜0003 / UR-0001〜0003。その他9枚はv0.1継続中。",
+          meta: "",
+          tags: ["Card Index"],
+          file: ""
+        }
+      ]
+    },
+    {
+      id: "living",
+      label: "Phase 3",
+      title: "Living Constitution",
+      cards: [
+        {
+          id: "GLOSSARY · CARD INDEX",
+          name: "Glossary（19語）+ Card Index",
+          desc: "認知玉・錨・マーブル仮説・知層・処方箋／ワクチンなど固有語19語の定義集。Card Indexは全20枚のスナップショット一覧。",
+          meta: "5 pages · docx",
+          tags: ["Glossary", "Card Index"],
+          file: "Phase3_Batch1_Glossary_CardIndex.docx"
+        },
+        {
+          id: "RESEARCH TIMELINE",
+          name: "Research Timeline（15区間）",
+          desc: "勾玉図鑑の観測ログ・設計仮説を発見の順に整理。Day 0から、Dewey→Weick→Varela→Nonaka→Latourを経て「唯一性の再現性」へ収束するまでの15区間。",
+          meta: "3 pages · docx",
+          tags: ["Research Timeline"],
+          file: "Phase3_Batch2_ResearchTimeline.docx"
+        },
+        {
+          id: "FUTURE CARDS · EDITORIAL",
+          name: "Future Cards + 編集メモ + 思考ログ",
+          desc: "未執筆の参照カード（UR-0005・MK-0001・PJ-0001）の記録、縁人と唯一性の再現性の独立カード化候補、編集セッション自体の観測ログ（#E01〜#E04）。",
+          meta: "5 pages · docx",
+          tags: ["Future Cards", "Editorial Notes"],
+          file: "Phase3_Batch3_Final.docx"
+        }
+      ]
+    },
+    {
+      id: "field",
+      label: "Phase 4 · Field",
+      title: "Field Projects",
+      cards: [
+        {
+          id: "PANDEMIC LOGIC · v1.3",
+          name: "同時多発プロジェクトの整理",
+          desc: "5件の現場プロジェクト（ゴミ箱運用・プロギング・錦糸町 Public Space Commons・PROJECT COMMONS・LAYERED PARK系）をPandemic Logic（OBSERVE→TRANSLATE→SURVIVE→INSTALL→MUTATE）の段階で整理。PROJECT COMMONSがUR-0005「都市意思決定」の実体化候補として浮上。",
+          meta: "5 pages · docx",
+          tags: ["Pandemic Logic", "Field", "UR-0005候補"],
+          file: "Phase4_Draft_Confirmed.docx"
+        }
+      ]
+    }
+  ],
+
+  // Glossary
+  glossary: [
+    {
+      term: "認知玉（にんちだま）",
+      def: "記録された内容ではなく、その内容を生んだ「ゆらぎ」という現象の存在証明（Ver.3）。MAGATAMAが扱う最小の観測単位。"
+    },
+    {
+      term: "マーブル仮説",
+      def: "個々の個性を消去せず、混ざり合うことで一回限りの配合（「1」）が立ち上がるという仮説。一般化・平均化とは異なる。"
+    },
+    {
+      term: "天秤のフラクタル",
+      def: "対立軸を拡大しても、そこに新しい対立軸が現れるという構造。認知インフラが個人・組織・都市・社会のどのスケールでも同じ設計原則で扱えることの根拠。"
+    },
+    {
+      term: "処方箋／ワクチン（宣言と浸透の対）",
+      def: "同じ思想を伝える二つの様式。処方箋は診断と治療を名指して渡す明示的様式。ワクチンは思想を弱毒化・分解し、現場の言語に紛れ込ませて免疫系に仕事をさせる様式。"
+    },
+    {
+      term: "縁人（えんじん）",
+      def: "組織の内と外の境界に意識的に立つ実践者。Nonakaの「middle-up-down」と機能的に似るが、立つ場所（境界 vs 階層の中間）が異なる。"
+    },
+    {
+      term: "唯一性の再現性",
+      def: "研究全体を貫く問いそのもの。再現性（同じ条件なら同じ結果）と唯一性（二度と同じものは生まれない）を両立させる構造を探る問題設定。"
+    }
+  ],
+
+  // Version History
+  versions: [
+    { v: "v0.1", date: "Core20開始",          desc: "Initial Research Cards" },
+    { v: "v0.5", date: "Core20完成",          desc: "Business・Urban領域のカード追加" },
+    { v: "v1.0", date: "Constitution Edition", desc: "Front Matter新規執筆。研究憲章（Preamble）を統合" },
+    { v: "v1.1", date: "Phase 2完了",          desc: "勾玉図鑑をCore20の11枚に反映・マージ" },
+    { v: "v1.2", date: "Phase 3完了",          desc: "Glossary・Card Index・Research Timeline・Future Cards追加。Living Constitution層確立" },
+    { v: "v1.3", date: "Phase 4完了（現在）",  desc: "同時多発する現場5件をPandemic Logicで整理。処方箋／ワクチンをGlossaryに追加。%表示とマーブル仮説の緊張を実装確認により解消", current: true }
+  ]
+
+};
+// ============================================================
+// ★ここまで★ 以下は触らない
+// ============================================================
+
+// Hero
+document.getElementById('hero-version').textContent = SITE_DATA.version;
+
+// Nav
+var navEl = document.getElementById('hero-nav');
+SITE_DATA.nav.forEach(function(n) {
+  var a = document.createElement('a');
+  a.href = '#' + n.id;
+  a.textContent = n.label;
+  navEl.appendChild(a);
+});
+
+// Sections
+var root = document.getElementById('sections-root');
+SITE_DATA.sections.forEach(function(sec) {
+  var el = document.createElement('section');
+  el.className = 'section';
+  el.id = sec.id;
+
+  var label = document.createElement('span');
+  label.className = 'section-label';
+  label.textContent = sec.label;
+
+  var title = document.createElement('h2');
+  title.className = 'section-title';
+  title.textContent = sec.title;
+
+  el.appendChild(label);
+  el.appendChild(title);
+
+  sec.cards.forEach(function(c) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = function() { toggleCard(card); };
+
+    var head = document.createElement('div');
+    head.className = 'card-head';
+
+    var info = document.createElement('div');
+    var idEl = document.createElement('span');
+    idEl.className = 'card-id';
+    idEl.textContent = c.id;
+    var nameEl = document.createElement('div');
+    nameEl.className = 'card-name';
+    nameEl.innerHTML = c.name;
+    info.appendChild(idEl);
+    info.appendChild(nameEl);
+
+    var tog = document.createElement('span');
+    tog.className = 'card-toggle';
+    tog.textContent = '+';
+
+    head.appendChild(info);
+    head.appendChild(tog);
+
+    var body = document.createElement('div');
+    body.className = 'card-body';
+
+    var desc = document.createElement('p');
+    desc.className = 'card-desc';
+    desc.textContent = c.desc;
+    body.appendChild(desc);
+
+    if (c.meta) {
+      var meta = document.createElement('span');
+      meta.className = 'card-meta';
+      meta.textContent = c.meta;
+      body.appendChild(meta);
+    }
+
+    if (c.tags && c.tags.length) {
+      c.tags.forEach(function(t) {
+        var tag = document.createElement('span');
+        tag.className = 'card-tag';
+        tag.textContent = t;
+        body.appendChild(tag);
+      });
+    }
+
+    if (c.file) {
+      var div = document.createElement('div');
+      div.className = 'card-divider';
+      body.appendChild(div);
+      var how = document.createElement('p');
+      how.className = 'card-how';
+      how.textContent = 'ファイル：' + c.file + '\n→ zipを展開後、Wordまたはページズで開く';
+      body.appendChild(how);
+    }
+
+    card.appendChild(head);
+    card.appendChild(body);
+    el.appendChild(card);
+  });
+
+  root.appendChild(el);
+});
+
+// Glossary
+var glossRoot = document.getElementById('glossary-root');
+SITE_DATA.glossary.forEach(function(g) {
+  var item = document.createElement('div');
+  item.className = 'gloss-item';
+  var term = document.createElement('span');
+  term.className = 'gloss-term';
+  term.textContent = g.term;
+  var def = document.createElement('p');
+  def.className = 'gloss-def';
+  def.textContent = g.def;
+  item.appendChild(term);
+  item.appendChild(def);
+  glossRoot.appendChild(item);
+});
+
+// Version History
+var verRoot = document.getElementById('version-root');
+SITE_DATA.versions.forEach(function(v) {
+  var item = document.createElement('div');
+  item.className = 'gloss-item';
+  if (v.current) {
+    item.style.borderBottom = '1px solid #C9A24A';
+  }
+  var term = document.createElement('span');
+  term.className = 'gloss-term';
+  term.textContent = v.v + ' · ' + v.date;
+  if (v.current) term.style.color = '#C9A24A';
+  var def = document.createElement('p');
+  def.className = 'gloss-def';
+  def.textContent = v.desc;
+  if (v.current) def.style.color = '#EAE3D3';
+  item.appendChild(term);
+  item.appendChild(def);
+  verRoot.appendChild(item);
+});
+
+// Footer
+document.getElementById('footer-text').innerHTML =
+  'MAGA Project Constitution<br>' +
+  'Living Document · ' + SITE_DATA.version + '<br>' +
+  'Deletion is discouraged.<br>' +
+  'Addition is the default method of evolution.';
+
+// Toggle
+function toggleCard(card) {
+  var isOpen = card.classList.contains('open');
+  var allCards = document.querySelectorAll('.card');
+  for (var i = 0; i < allCards.length; i++) {
+    allCards[i].classList.remove('open');
+  }
+  if (!isOpen) card.classList.add('open');
+}
+</script>
+</body>
+</html>
