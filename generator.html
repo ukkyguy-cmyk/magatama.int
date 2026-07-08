@@ -90,9 +90,17 @@ select { cursor: pointer; }
 .mode-toggle { display: flex; gap: 0; margin-bottom: 32px; }
 .mode-btn { flex: 1; padding: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid #2A2618; background: transparent; color: #B8AF9C; cursor: pointer; -webkit-appearance: none; border-radius: 0; }
 .mode-btn.active { background: #1A1712; color: #C9A24A; border-color: #C9A24A; }
+
+.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.back { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; text-decoration: none; letter-spacing: 0.1em; }
 </style>
 </head>
 <body>
+
+<div class="top">
+  <a href="index.html" class="back">← Hub に戻る</a>
+  <a href="manual.html" class="back">Manual →</a>
+</div>
 
 <h1>Card Generator</h1>
 <span class="subtitle">MAGA Project Constitution · index.html 更新ツール</span>
