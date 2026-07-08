@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Generator · MAGA Constitution</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0A0A08; color: #EAE3D3; font-family: 'Noto Serif JP', serif; font-size: 14px; padding: 32px 20px 80px; min-height: 100vh; }
+
+h1 { font-family: 'Space Mono', monospace; font-size: 13px; color: #C9A24A; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+.subtitle { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; letter-spacing: 0.1em; margin-bottom: 40px; display: block; }
+
+.field { margin-bottom: 24px; }
+label { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+input, textarea, select {
+  width: 100%;
+  background: #111009;
+  border: 1px solid #2A2618;
+  color: #EAE3D3;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 13px;
+  padding: 12px 14px;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+input:focus, textarea:focus, select:focus { border-color: #C9A24A; }
+textarea { height: 100px; resize: vertical; line-height: 1.7; }
+select { cursor: pointer; }
+.hint { font-family: 'Space Mono', monospace; font-size: 9px; color: #3A3020; margin-top: 6px; display: block; }
+
+.divider { height: 1px; background: #2A2618; margin: 32px 0; }
+
+.btn {
+  width: 100%;
+  background: #C9A24A;
+  color: #0A0A08;
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.btn:active { opacity: 0.8; }
+.btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: #C9A24A;
+  border: 1px solid #2A2618;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 14px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.btn-secondary:active { border-color: #C9A24A; }
+
+.output-wrap { margin-top: 32px; display: none; }
+.output-label { font-family: 'Space Mono', monospace; font-size: 10px; color: #C9A24A; letter-spacing: 0.14em; margin-bottom: 8px; display: block; }
+.output-box {
+  background: #111009;
+  border: 1px solid #C9A24A;
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #EAE3D3;
+  line-height: 1.8;
+  word-break: break-all;
+  white-space: pre-wrap;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.copy-notice { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; margin-top: 10px; display: block; }
+
+.step { background: #111009; border: 1px solid #2A2618; padding: 16px; margin-top: 24px; }
+.step-title { font-family: 'Space Mono', monospace; font-size: 10px; color: #C9A24A; letter-spacing: 0.14em; margin-bottom: 10px; display: block; }
+.step-body { font-size: 12px; color: #B8AF9C; line-height: 1.9; }
+.step-body code { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; background: #0A0A08; padding: 1px 5px; }
+
+.mode-toggle { display: flex; gap: 0; margin-bottom: 32px; }
+.mode-btn { flex: 1; padding: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid #2A2618; background: transparent; color: #B8AF9C; cursor: pointer; -webkit-appearance: none; border-radius: 0; }
+.mode-btn.active { background: #1A1712; color: #C9A24A; border-color: #C9A24A; }
+</style>
+</head>
+<body>
+
+<h1>Card Generator</h1>
+<span class="subtitle">MAGA Project Constitution · index.html 更新ツール</span>
+
+<div class="mode-toggle">
+  <button class="mode-btn active" onclick="setMode('card')" id="mode-card">カード追加</button>
+  <button class="mode-btn" onclick="setMode('gloss')" id="mode-gloss">Glossary追加</button>
+  <button class="mode-btn" onclick="setMode('version')" id="mode-version">Version追加</button>
+</div>
+
+<!-- CARD MODE -->
+<div id="form-card">
+  <div class="field">
+    <label>セクション</label>
+    <select id="c-section">
+      <option value="foundation">Foundation（Phase 1）</option>
+      <option value="core20">Core 20（Phase 2）</option>
+      <option value="living">Living Constitution（Phase 3）</option>
+      <option value="field" selected>Field Projects（Phase 4）</option>
+    </select>
+    <span class="hint">追加先のセクションを選ぶ</span>
+  </div>
+  <div class="field">
+    <label>カードID（ラベル）</label>
+    <input type="text" id="c-id" placeholder="例：UR-0005 · v1.3" />
+    <span class="hint">小さいラベル文字。バージョンや区分を入れると読みやすい</span>
+  </div>
+  <div class="field">
+    <label>カード名（タイトル）</label>
+    <input type="text" id="c-name" placeholder="例：都市意思決定 · PROJECT COMMONS" />
+  </div>
+  <div class="field">
+    <label>説明文</label>
+    <textarea id="c-desc" placeholder="このドキュメントが何を扱うか、どこから来たか、何が分かるかを書く。"></textarea>
+  </div>
+  <div class="field">
+    <label>ページ数・形式</label>
+    <input type="text" id="c-meta" placeholder="例：8 pages · docx" />
+  </div>
+  <div class="field">
+    <label>タグ（カンマ区切り）</label>
+    <input type="text" id="c-tags" placeholder="例：Field, UR-0005, Pandemic Logic" />
+  </div>
+  <div class="field">
+    <label>ファイル名</label>
+    <input type="text" id="c-file" placeholder="例：UR0005_ProjectCommons.docx" />
+    <span class="hint">files/ フォルダに置いた実ファイルと完全に同じ名前を入力すること</span>
+  </div>
+  <button class="btn" onclick="generateCard()">JSON を生成する</button>
+</div>
+
+<!-- GLOSSARY MODE -->
+<div id="form-gloss" style="display:none;">
+  <div class="field">
+    <label>用語</label>
+    <input type="text" id="g-term" placeholder="例：処方箋／ワクチン（宣言と浸透の対）" />
+  </div>
+  <div class="field">
+    <label>定義</label>
+    <textarea id="g-def" placeholder="この用語が何を意味するか、どこから来たか。"></textarea>
+  </div>
+  <button class="btn" onclick="generateGloss()">JSON を生成する</button>
+</div>
+
+<!-- VERSION MODE -->
+<div id="form-version" style="display:none;">
+  <div class="field">
+    <label>バージョン番号</label>
+    <input type="text" id="v-ver" placeholder="例：v1.4" />
+  </div>
+  <div class="field">
+    <label>日付・フェーズ名</label>
+    <input type="text" id="v-date" placeholder="例：Phase 5完了" />
+  </div>
+  <div class="field">
+    <label>説明</label>
+    <textarea id="v-desc" placeholder="何を追加・更新・変更したか。"></textarea>
+  </div>
+  <button class="btn" onclick="generateVersion()">JSON を生成する</button>
+</div>
+
+<!-- OUTPUT -->
+<div class="output-wrap" id="output-wrap">
+  <span class="output-label">生成されたJSON ↓ 全選択してコピー</span>
+  <div class="output-box" id="output-box"></div>
+  <span class="copy-notice" id="copy-notice"></span>
+  <button class="btn" onclick="copyOutput()" style="margin-top:12px;">コピーする</button>
+</div>
+
+<!-- NEXT STEP -->
+<div class="step" id="step-box" style="display:none;">
+  <span class="step-title">次の手順</span>
+  <p class="step-body" id="step-body"></p>
+</div>
+
+<script>
+var currentMode = 'card';
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('form-card').style.display = mode === 'card' ? 'block' : 'none';
+  document.getElementById('form-gloss').style.display = mode === 'gloss' ? 'block' : 'none';
+  document.getElementById('form-version').style.display = mode === 'version' ? 'block' : 'none';
+  document.getElementById('mode-card').className = 'mode-btn' + (mode === 'card' ? ' active' : '');
+  document.getElementById('mode-gloss').className = 'mode-btn' + (mode === 'gloss' ? ' active' : '');
+  document.getElementById('mode-version').className = 'mode-btn' + (mode === 'version' ? ' active' : '');
+  document.getElementById('output-wrap').style.display = 'none';
+  document.getElementById('step-box').style.display = 'none';
+}
+
+function generateCard() {
+  var section = document.getElementById('c-section').value;
+  var id = document.getElementById('c-id').value.trim();
+  var name = document.getElementById('c-name').value.trim();
+  var desc = document.getElementById('c-desc').value.trim();
+  var meta = document.getElementById('c-meta').value.trim();
+  var tagsRaw = document.getElementById('c-tags').value.trim();
+  var file = document.getElementById('c-file').value.trim();
+
+  if (!name || !desc) { alert('カード名と説明文は必須です'); return; }
+
+  var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim(); }) : [];
+
+  var obj = { id: id, name: name, desc: desc, meta: meta, tags: tags, file: file };
+  var json = JSON.stringify(obj, null, 2);
+
+  var sectionLabels = { foundation: 'Foundation', core20: 'Core 20', living: 'Living Constitution', field: 'Field Projects' };
+
+  showOutput(json);
+  showStep(
+    '① このJSONをコピーする\n' +
+    '② GitHubで index.html を開く\n' +
+    '③ SITE_DATA.sections の中から「' + sectionLabels[section] + '」のセクションを探す\n' +
+    '④ そのセクションの cards: [ ... ] の最後の } の後に , を付けて、このJSONを貼り付ける\n' +
+    '⑤ コミット → Vercelが自動デプロイ'
+  );
+}
+
+function generateGloss() {
+  var term = document.getElementById('g-term').value.trim();
+  var def = document.getElementById('g-def').value.trim();
+  if (!term || !def) { alert('用語と定義は必須です'); return; }
+  var obj = { term: term, def: def };
+  var json = JSON.stringify(obj, null, 2);
+  showOutput(json);
+  showStep(
+    '① このJSONをコピーする\n' +
+    '② GitHubで index.html を開く\n' +
+    '③ SITE_DATA.glossary の配列の最後の } の後に , を付けて、このJSONを貼り付ける\n' +
+    '④ コミット → Vercelが自動デプロイ'
+  );
+}
+
+function generateVersion() {
+  var ver = document.getElementById('v-ver').value.trim();
+  var date = document.getElementById('v-date').value.trim();
+  var desc = document.getElementById('v-desc').value.trim();
+  if (!ver || !desc) { alert('バージョン番号と説明は必須です'); return; }
+
+  var obj = { v: ver, date: date, desc: desc, current: true };
+  var json = JSON.stringify(obj, null, 2);
+  showOutput(json);
+  showStep(
+    '① このJSONをコピーする\n' +
+    '② GitHubで index.html を開く\n' +
+    '③ SITE_DATA.versions の配列で、前の current:true を削除する（または false にする）\n' +
+    '④ 配列の最後の } の後に , を付けて、このJSONを貼り付ける\n' +
+    '⑤ hero-version と SITE_DATA.version の文字列も更新する\n' +
+    '⑥ コミット → Vercelが自動デプロイ'
+  );
+}
+
+function showOutput(json) {
+  document.getElementById('output-box').textContent = json;
+  document.getElementById('output-wrap').style.display = 'block';
+  document.getElementById('copy-notice').textContent = '';
+}
+
+function showStep(text) {
+  document.getElementById('step-body').textContent = text;
+  document.getElementById('step-box').style.display = 'block';
+}
+
+function copyOutput() {
+  var text = document.getElementById('output-box').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      document.getElementById('copy-notice').textContent = '✓ コピーしました';
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    document.getElementById('copy-notice').textContent = '✓ コピーしました';
+  }
+}
+</script>
+</body>
+</html>
