@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>更新マニュアル · MAGA Constitution</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0A0A08; color: #EAE3D3; font-family: 'Noto Serif JP', serif; font-size: 14px; line-height: 1.9; padding: 40px 20px 80px; }
+
+.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+.back { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; text-decoration: none; letter-spacing: 0.1em; }
+
+h1 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 0.05em; color: #C9A24A; margin-bottom: 8px; }
+.subtitle { font-family: 'Space Mono', monospace; font-size: 10px; color: #B8AF9C; letter-spacing: 0.12em; display: block; margin-bottom: 40px; }
+
+h2 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; color: #EAE3D3; margin-top: 40px; margin-bottom: 14px; border-bottom: 1px solid #2A2618; padding-bottom: 10px; }
+h3 { font-family: 'Space Mono', monospace; font-size: 12px; color: #C9A24A; letter-spacing: 0.08em; margin-top: 24px; margin-bottom: 10px; }
+
+p { color: #B8AF9C; margin-bottom: 14px; }
+strong { color: #EAE3D3; font-weight: 700; }
+code { font-family: 'Space Mono', monospace; font-size: 12px; background: #111009; border: 1px solid #2A2618; color: #C9A24A; padding: 2px 6px; }
+
+pre {
+  background: #111009;
+  border: 1px solid #2A2618;
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #EAE3D3;
+  overflow-x: auto;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+th { font-family: 'Space Mono', monospace; font-size: 9px; color: #C9A24A; letter-spacing: 0.1em; text-align: left; padding: 8px; border-bottom: 1px solid #2A2618; }
+td { padding: 8px; border-bottom: 1px solid #1E1C14; color: #B8AF9C; vertical-align: top; }
+
+ul, ol { padding-left: 20px; margin-bottom: 16px; color: #B8AF9C; }
+li { margin-bottom: 8px; }
+
+.divider { text-align: center; color: #C9A24A; margin: 32px 0; font-family: 'Space Mono', monospace; }
+
+.warn-box {
+  border: 1px solid #6B4A2E;
+  background: #1A120B;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.warn-box p { color: #D9C4A8; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a href="index.html" class="back">← Hub に戻る</a>
+  <a href="generator.html" class="back">Generator →</a>
+</div>
+
+<h1>更新マニュアル</h1>
+<span class="subtitle">MAGA Project Constitution Hub</span>
+
+<p>このサイトは <code>index.html</code> 1枚でできています。中身のデータ（カード・用語・バージョン）はすべて、ファイル内の <code>SITE_DATA</code> という1箇所にまとまっています。コードを書く必要はありません。<strong>generator.html でフォームを埋めて、出てきた文章をコピペするだけ</strong>です。</p>
+
+<h2>リポジトリの構成（重要）</h2>
+<pre>リポジトリのルート/
+├── index.html       ← サイト本体
+├── generator.html   ← カード生成ツール
+├── manual.html      ← このページ
+└── files/            ← 実際のWord・PDFファイルを置く場所
+    ├── MAGA_Project_Constitution_v1.0_FrontMatter.docx
+    ├── Core20_v1.1_Merged.docx
+    └── ...</pre>
+
+<div class="warn-box">
+  <p><strong>カードの「ダウンロード」ボタンは、files/ フォルダの中を見にいきます。</strong></p>
+  <p>ファイルをこのフォルダに置かないと、ボタンを押しても404になります。新しいドキュメントを追加するときは、必ず①files/フォルダに実ファイルをアップロード、②generator.htmlの「ファイル名」欄に完全に同じファイル名を入力、の2つをセットで行ってください。</p>
+</div>
+
+<h2>全体の流れ（3ステップ）</h2>
+<pre>① generator.html を開いてフォームを埋める
+        ↓
+② 出てきたJSONをコピーする
+        ↓
+③ GitHubの index.html に貼り付けてコミットする
+   （新しいファイルがあれば files/ フォルダにも一緒にアップロード）
+        ↓
+   Vercelが自動でデプロイ（数十秒〜数分）</pre>
+
+<h2>① generator.html を開く</h2>
+<p><code>generator.html</code> をブラウザ（PCでもスマホでも可）で開きます。上部に3つのボタンがあります。</p>
+<ul>
+  <li><strong>カード追加</strong> ── 新しいドキュメント（Word/PDFなど）を紹介するカードを追加したいとき</li>
+  <li><strong>Glossary追加</strong> ── 新しい用語を用語集に追加したいとき</li>
+  <li><strong>Version追加</strong> ── バージョン履歴に新しい版を追加したいとき</li>
+</ul>
+<p>用途に応じてボタンを選び、フォームを埋めて「JSONを生成する」を押します。</p>
+
+<h2>② カードを追加する場合</h2>
+<h3>入力する項目</h3>
+<table>
+  <tr><th>項目</th><th>説明</th><th>例</th></tr>
+  <tr><td>セクション</td><td>4つのセクションのどこに置くか</td><td>Field Projects</td></tr>
+  <tr><td>カードID</td><td>カード上部の小さい文字</td><td>UR-0005 · v1.3</td></tr>
+  <tr><td>カード名</td><td>カードのタイトル</td><td>都市意思決定</td></tr>
+  <tr><td>説明文</td><td>中身の要約</td><td>PROJECT COMMONSがUR-0005の実体化候補として…</td></tr>
+  <tr><td>ページ数・形式</td><td>参考情報</td><td>8 pages · docx</td></tr>
+  <tr><td>タグ</td><td>カンマ区切りで複数入力可</td><td>Field, UR-0005</td></tr>
+  <tr><td>ファイル名</td><td>実際のファイル名</td><td>UR0005_Draft.docx</td></tr>
+</table>
+
+<h3>GitHubでの貼り付け先</h3>
+<p><code>index.html</code> の中の <code>SITE_DATA.sections</code> を探します。4つのセクション（foundation / core20 / living / field）があり、それぞれに <code>cards: [ ... ]</code> という配列があります。該当セクションの最後のカードの <code>}</code> の直後に <code>,</code> を追加し、その後にコピーしたJSONを貼り付けます。</p>
+<pre>cards: [
+  { ...既存のカード1... },
+  { ...既存のカード2... },     ← ここに , を足す
+  { ...ここに新しいJSONを貼り付け... }   ← 追加分
+]</pre>
+
+<h2>③ Glossary（用語）を追加する場合</h2>
+<p>「用語」と「定義」の2つだけ入力します。生成されたJSONは、<code>SITE_DATA.glossary</code> の配列の最後に、同じ要領で貼り付けます。</p>
+
+<h2>④ Version History（更新履歴）を追加する場合</h2>
+<p>新しいバージョン番号・フェーズ名・説明を入力します。</p>
+<div class="warn-box">
+  <p><strong>注意が1つだけあります。</strong></p>
+  <p>現在の最新版には <code>current: true</code> という印がついていて、これが金色でハイライトされます。新しいバージョンを追加するときは、今ある <code>current: true</code> を <code>false</code> に書き換えてから、新しいJSONを追加してください。ページ上部の <code>hero-version</code> と <code>SITE_DATA.version</code> の文字列も手動で書き換える必要があります。</p>
+</div>
+
+<h2>よくある失敗</h2>
+<ul>
+  <li><strong>カンマの付け忘れ</strong> ── JSONを配列に追加するとき、前の要素の後に<code>,</code>を忘れると、サイト全体が真っ白になります。</li>
+  <li><strong>引用符の種類</strong> ── 日本語入力中に全角の記号が混ざるとJSONが壊れます。generator.htmlの出力をそのまま使えば安全です。</li>
+  <li><strong>ファイル名の不一致</strong> ── カードに書いたファイル名と、files/フォルダの実際のファイル名が1文字でも違うとリンク切れになります。</li>
+</ul>
+
+<h2>動作確認の仕方</h2>
+<p>貼り付けてコミットしたら、Vercelのデプロイ完了を待ってからブラウザでサイトを開き、該当セクションを開いて新しいカードが表示されているか確認してください。もし白い画面になった場合は、直前のコミットを取り消す（GitHubの履歴からrevertする）のが一番早い復旧方法です。</p>
+
+<span class="divider">⸻</span>
+
+</body>
+</html>
