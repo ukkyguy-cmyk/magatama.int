@@ -39,6 +39,18 @@ body { background: #0A0A08; color: #EAE3D3; font-family: 'Noto Serif JP', serif;
 .card-tag { display: inline-block; background: #1A1712; border: 1px solid #2A2618; color: #B8AF9C; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 3px 8px; margin-right: 6px; margin-bottom: 8px; }
 .card-divider { width: 24px; height: 1px; background: #2A2618; margin: 14px 0; }
 .card-how { font-size: 12px; color: #B8AF9C; line-height: 1.8; }
+.card-download {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #0A0A08;
+  background: #C9A24A;
+  letter-spacing: 0.04em;
+  padding: 10px 16px;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.card-download:active { opacity: 0.8; }
 
 .gloss-item { padding: 16px 0; border-bottom: 1px solid #1E1C14; }
 .gloss-term { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A24A; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
@@ -313,10 +325,13 @@ SITE_DATA.sections.forEach(function(sec) {
       var div = document.createElement('div');
       div.className = 'card-divider';
       body.appendChild(div);
-      var how = document.createElement('p');
-      how.className = 'card-how';
-      how.textContent = 'ファイル：' + c.file + '\n→ zipを展開後、Wordまたはページズで開く';
-      body.appendChild(how);
+      var link = document.createElement('a');
+      link.className = 'card-download';
+      link.href = 'files/' + encodeURIComponent(c.file);
+      link.setAttribute('download', c.file);
+      link.textContent = '↓ ' + c.file + ' をダウンロード';
+      link.onclick = function(e) { e.stopPropagation(); };
+      body.appendChild(link);
     }
 
     card.appendChild(head);
