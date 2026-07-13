@@ -352,8 +352,7 @@ SITE_DATA.sections.forEach(function(sec) {
       var link = document.createElement('a');
       link.className = 'card-download';
       link.href = 'files/' + encodeURIComponent(c.file);
-      link.setAttribute('download', c.file);
-      link.textContent = '↓ ' + c.file + ' をダウンロード';
+      link.textContent = '↓ ' + c.file + ' を開く';
       link.onclick = function(e) { e.stopPropagation(); };
       body.appendChild(link);
     }
